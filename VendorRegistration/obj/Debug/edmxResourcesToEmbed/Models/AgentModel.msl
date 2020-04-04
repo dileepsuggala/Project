@@ -1,0 +1,14 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="vendorModel1StoreContainer" CdmEntityContainer="vendorEntities1">
+    <EntitySetMapping Name="DeliveryAgents">
+      <EntityTypeMapping TypeName="vendorModel1.DeliveryAgent">
+        <MappingFragment StoreEntitySet="DeliveryAgent">
+          <ScalarProperty Name="Id" ColumnName="Id" />
+          <ScalarProperty Name="AgentName" ColumnName="AgentName" />
+          <ScalarProperty Name="Mobile" ColumnName="Mobile" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

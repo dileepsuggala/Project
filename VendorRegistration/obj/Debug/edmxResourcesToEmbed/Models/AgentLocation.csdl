@@ -1,0 +1,41 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="vendorModel2" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="AgentLocation">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AssignLocation" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="AgentId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="DeliveryAgent" Relationship="Self.FK__AgentLoca__Agent__49C3F6B7" FromRole="AgentLocation" ToRole="DeliveryAgent" />
+  </EntityType>
+  <EntityType Name="DeliveryAgent">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="AgentName" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Mobile" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+    <NavigationProperty Name="AgentLocations" Relationship="Self.FK__AgentLoca__Agent__49C3F6B7" FromRole="DeliveryAgent" ToRole="AgentLocation" />
+  </EntityType>
+  <Association Name="FK__AgentLoca__Agent__49C3F6B7">
+    <End Role="DeliveryAgent" Type="Self.DeliveryAgent" Multiplicity="1" />
+    <End Role="AgentLocation" Type="Self.AgentLocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DeliveryAgent">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AgentLocation">
+        <PropertyRef Name="AgentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="vendorEntities2" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="AgentLocations" EntityType="Self.AgentLocation" />
+    <EntitySet Name="DeliveryAgents" EntityType="Self.DeliveryAgent" />
+    <AssociationSet Name="FK__AgentLoca__Agent__49C3F6B7" Association="Self.FK__AgentLoca__Agent__49C3F6B7">
+      <End Role="DeliveryAgent" EntitySet="DeliveryAgents" />
+      <End Role="AgentLocation" EntitySet="AgentLocations" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

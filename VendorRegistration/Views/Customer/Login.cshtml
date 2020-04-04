@@ -1,0 +1,76 @@
+﻿@model VendorRegistration.Models.CustomerLogin
+
+@{
+    ViewBag.Title = "Login";
+}
+<!DOCTYPE html>
+
+
+<html>
+
+
+<body background="~/image/Login.jpg" style="background-repeat:no-repeat;background-size:cover">
+
+
+
+    <h1 style="font-family:Cambria, Cochin, Georgia, Times, Times New Roman, serif;color:antiquewhite">Welcome</h1>
+
+
+    @using (Html.BeginForm())
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="form-horizontal">
+
+            <hr />
+            <h4 style="color:cornflowerblue">Enter your Email Id and Password:</h4>
+            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+            <div class="form-group">
+
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.EmailId, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(m => m.EmailId) } })
+                    @Html.ValidationMessageFor(model => model.EmailId, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control", placeholder = @Html.DisplayNameFor(m => m.Password) } })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.RememberMe, htmlAttributes: new { @class = "control-label col-md-2", style = "color:white;" })
+                <div class="col-md-10">
+                    <div class="checkbox">
+                        @Html.EditorFor(model => model.RememberMe)
+                        @Html.ValidationMessageFor(model => model.RememberMe, "", new { @class = "text-danger" })
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-10">
+                    <input type="submit" value="Log In" class="btn btn-success btn-sm btn-block" />
+                </div>
+            </div>
+
+
+
+            <div>
+                @Html.ActionLink("Click here to register", "Registration", "Customer")&nbsp;&nbsp;&nbsp;|&nbsp;
+                <span> @Html.ActionLink("Forgot Password?", "ForgotPassword", "Customer")</span>
+            </div>
+
+
+        </div>
+    }
+    @section Scripts
+    {
+        <script src="~/Scripts/jquery.validate.min.js"></script>
+        <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+    }
+</body>
+</html>

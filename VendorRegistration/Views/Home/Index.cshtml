@@ -1,0 +1,82 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Welcome Vendor</h2>
+
+welcome @HttpContext.Current.User.Identity.Name
+
+
+
+
+@if (Request.IsAuthenticated)
+{
+    using (Html.BeginForm("Logout", "Vendor", FormMethod.Post, new { id = "logoutForm" }))
+    {
+        <a href="javascript:document.getElementById('logoutForm').submit()">Logout</a>
+    }
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+     .button {
+            display: inline-block;
+            border-radius: 4px;
+            background-color: #f4511e;
+            color: #FFFFFF;
+            text-align: center;
+            font-size: 28px;
+            padding: 150px 200px;
+            width: 200px;
+            transition: all 0.5s;
+            cursor: pointer;
+            
+            margin: 5px;
+        }
+
+            .button span {
+                cursor: pointer;
+                display: inline-block;
+                position: relative;
+                transition: 0.5s;
+            }
+
+                .button span:after {
+                    content: '\00bb';
+                    position: absolute;
+                    opacity: 0;
+                    top: 0;
+                    right: -20px;
+                    transition: 0.5s;
+                }
+
+            .button:hover span {
+                padding-right: 25px;
+            }
+
+                .button:hover span:after {
+                    opacity: 1;
+                    right: 0;
+                }
+    </style>
+</head>
+<body>
+
+
+        <h2>Vendor Duties</h2>
+
+        <button class="button" style="vertical-align:middle" onclick="window.location.href = 'https://localhost:44310/DeliveryAgents/Create';"><span>Add Delivery Agent </span></button>     <button class="button" style="vertical-align:middle" onclick="window.location.href = 'https://localhost:44310/AgentLocations/Create';"><span>Assign Agent Location  </span></button><br />
+
+        <button class="button" style="vertical-align:middle" onclick="window.location.href = 'https://localhost:44310/Vendor/VOrder';"><span> View Customer Subscription </span></button>     <button class="button" style="vertical-align:middle" onclick="window.location.href = 'https://localhost:44310/Vendor/VOrder';"><span>View Customer Bill </span></button>
+
+
+
+
+
+
+
+</body>
+</html>
+

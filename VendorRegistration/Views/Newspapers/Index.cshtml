@@ -1,0 +1,42 @@
+﻿@model IEnumerable<VendorRegistration.Models.Newspaper>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>List of newspapers</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.NewspaperName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.Price)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.NewspaperName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Price)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.NewspaperId }) |
+            @Html.ActionLink("Details", "Details", new { id=item.NewspaperId }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.NewspaperId })
+        </td>
+    </tr>
+}
+
+</table>
+<p>
+    @Html.ActionLink("Back to Admin", "AfterLogin", "Admin")
+</p>

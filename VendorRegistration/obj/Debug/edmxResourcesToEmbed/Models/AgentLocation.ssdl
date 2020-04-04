@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="vendorModel2.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="AgentLocation">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AssignLocation" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="AgentId" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="DeliveryAgent">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AgentName" Type="varchar" MaxLength="50" Nullable="false" />
+    <Property Name="Mobile" Type="varchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <Association Name="FK__AgentLoca__Agent__49C3F6B7">
+    <End Role="DeliveryAgent" Type="Self.DeliveryAgent" Multiplicity="1" />
+    <End Role="AgentLocation" Type="Self.AgentLocation" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="DeliveryAgent">
+        <PropertyRef Name="Id" />
+      </Principal>
+      <Dependent Role="AgentLocation">
+        <PropertyRef Name="AgentId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="vendorModel2StoreContainer">
+    <EntitySet Name="AgentLocation" EntityType="Self.AgentLocation" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="DeliveryAgent" EntityType="Self.DeliveryAgent" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK__AgentLoca__Agent__49C3F6B7" Association="Self.FK__AgentLoca__Agent__49C3F6B7">
+      <End Role="DeliveryAgent" EntitySet="DeliveryAgent" />
+      <End Role="AgentLocation" EntitySet="AgentLocation" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

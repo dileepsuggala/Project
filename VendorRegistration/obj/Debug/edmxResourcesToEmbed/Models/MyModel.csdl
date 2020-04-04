@@ -1,0 +1,116 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ProjectDBModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Feedback">
+    <Key>
+      <PropertyRef Name="FeedbackId" />
+    </Key>
+    <Property Name="FeedbackId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="PhoneNo" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+    <Property Name="Ftext" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+  </EntityType>
+  <EntityContainer Name="ProjectDBEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Feedbacks" EntityType="Self.Feedback" />
+    <EntitySet Name="Customers" EntityType="ProjectDBModel.Customer" />
+    <EntitySet Name="Newspapers" EntityType="ProjectDBModel.Newspaper" />
+    <EntitySet Name="Orders" EntityType="ProjectDBModel.Order" />
+    <EntitySet Name="tbl_invoice" EntityType="ProjectDBModel.tbl_invoice" />
+    <AssociationSet Name="FK__tbl_invoi__Custo__36B12243" Association="ProjectDBModel.FK__tbl_invoi__Custo__36B12243">
+      <End Role="Customer" EntitySet="Customers" />
+      <End Role="tbl_invoice" EntitySet="tbl_invoice" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Order__Newspaper__398D8EEE" Association="ProjectDBModel.FK__Order__Newspaper__398D8EEE">
+      <End Role="Newspaper" EntitySet="Newspapers" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Order__InvoiceId__3A81B327" Association="ProjectDBModel.FK__Order__InvoiceId__3A81B327">
+      <End Role="tbl_invoice" EntitySet="tbl_invoice" />
+      <End Role="Order" EntitySet="Orders" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Customer">
+    <Key>
+      <PropertyRef Name="CustomerId" />
+    </Key>
+    <Property Name="CustomerId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CustomerName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="PhoneNo" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Address" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="EmailId" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="IsEmailVerified" Type="Boolean" Nullable="false" />
+    <Property Name="ActivationCode" Type="Guid" Nullable="false" />
+    <Property Name="ResetPasswordCode" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="ConfirmPassword" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="tbl_invoice" Relationship="ProjectDBModel.FK__tbl_invoi__Custo__36B12243" FromRole="Customer" ToRole="tbl_invoice" />
+  </EntityType>
+  <EntityType Name="Newspaper">
+    <Key>
+      <PropertyRef Name="NewspaperId" />
+    </Key>
+    <Property Name="NewspaperId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="NewspaperName" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <Property Name="Price" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Orders" Relationship="ProjectDBModel.FK__Order__Newspaper__398D8EEE" FromRole="Newspaper" ToRole="Order" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="OrderId" />
+    </Key>
+    <Property Name="OrderId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="OrderQty" Type="Int32" Nullable="false" />
+    <Property Name="OrderBill" Type="Double" Nullable="false" />
+    <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Order_Unitprice" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="NewspaperId" Type="Int32" Nullable="false" />
+    <Property Name="InvoiceId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Newspaper" Relationship="ProjectDBModel.FK__Order__Newspaper__398D8EEE" FromRole="Order" ToRole="Newspaper" />
+    <NavigationProperty Name="tbl_invoice" Relationship="ProjectDBModel.FK__Order__InvoiceId__3A81B327" FromRole="Order" ToRole="tbl_invoice" />
+  </EntityType>
+  <EntityType Name="tbl_invoice">
+    <Key>
+      <PropertyRef Name="InvoiceId" />
+    </Key>
+    <Property Name="InvoiceId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="InvoiceDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Invoice_TotalBill" Type="Decimal" Nullable="false" Precision="19" Scale="4" />
+    <Property Name="CustomerId" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Customer" Relationship="ProjectDBModel.FK__tbl_invoi__Custo__36B12243" FromRole="tbl_invoice" ToRole="Customer" />
+    <NavigationProperty Name="Orders" Relationship="ProjectDBModel.FK__Order__InvoiceId__3A81B327" FromRole="tbl_invoice" ToRole="Order" />
+  </EntityType>
+  <Association Name="FK__tbl_invoi__Custo__36B12243">
+    <End Type="ProjectDBModel.Customer" Role="Customer" Multiplicity="1" />
+    <End Type="ProjectDBModel.tbl_invoice" Role="tbl_invoice" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customer">
+        <PropertyRef Name="CustomerId" />
+      </Principal>
+      <Dependent Role="tbl_invoice">
+        <PropertyRef Name="CustomerId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Order__Newspaper__398D8EEE">
+    <End Type="ProjectDBModel.Newspaper" Role="Newspaper" Multiplicity="1" />
+    <End Type="ProjectDBModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Newspaper">
+        <PropertyRef Name="NewspaperId" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="NewspaperId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Order__InvoiceId__3A81B327">
+    <End Type="ProjectDBModel.tbl_invoice" Role="tbl_invoice" Multiplicity="1" />
+    <End Type="ProjectDBModel.Order" Role="Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="tbl_invoice">
+        <PropertyRef Name="InvoiceId" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="InvoiceId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>

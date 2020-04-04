@@ -1,0 +1,52 @@
+﻿@model VendorRegistration.Models.Newspaper
+@{
+    ViewBag.Title = "Addtocart";
+}
+<!DOCTYPE html>
+
+<html>
+
+
+<body background="~/image/Newspaper.jpg" style="background-repeat:no-repeat;background-size:cover">
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                @Html.ActionLink("NewsEdge", "FirstPage", "First", new { area = "" }, new { @class = "navbar-brand" })
+            </div>
+            <div class="navbar-collapse collapse navbar-right">
+                <ul class="nav navbar-nav">
+                    <p class="navbar-text">
+                        Welcome @HttpContext.Current.User.Identity.Name
+                    </p>
+                    
+                    <li>
+                        @Html.ActionLink("Logout", "Logout", "Customer")
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <br />
+    <br />
+    <br />
+    @using (Html.BeginForm())
+    {
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 col-md-8 col-sm-8">
+                    <h1>Newspaper Name: @Model.NewspaperName</h1>
+                    <h2>Price:@Model.Price</h2>
+                    <input type="number" name="qty" value="0" id="qty" />
+                    <input type="submit" value="Submit" class="btn btn-default" />
+                </div>
+            </div>
+        </div>
+    }
+
+    </body>
+</html>

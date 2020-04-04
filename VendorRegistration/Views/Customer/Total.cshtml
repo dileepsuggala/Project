@@ -1,0 +1,78 @@
+﻿
+@{
+    ViewBag.Title = "Total";
+}
+
+<br />
+
+
+@if (TempData["cart"] != null)
+{
+
+    <div class="btn btn-default">@Html.ActionLink("Back", "Index", "Customer")</div>
+    <table class="table table-responsive">
+        <thead>
+            <tr>
+                <th>
+                    Newspaper Name
+                </th>
+                <th>
+                    Price
+                </th>
+                <th>
+                    No: of days subscribed
+                </th>
+                <th>
+                    Total Bill
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in TempData["cart"] as List<VendorRegistration.Models.Cart>)
+            {
+                <tr>
+                    <td>
+                        @item.PaperName
+                    </td>
+                    <td>
+                        @item.price
+                    </td>
+                    <td>
+                        @item.qty
+                    </td>
+                    <td>
+                        @item.bill
+                    </td>
+                    <td>
+                        @Html.ActionLink("Remove", "Remove", new { id = item.PaperId })
+                    </td>
+                </tr>
+            }
+        </tbody>
+        <tfoot style="color:black;font-size:15px">
+            <tr>
+                <td colspan="4"></td>
+                <td>@TempData["total"]</td>
+            </tr>
+        </tfoot>
+    </table>
+
+
+
+
+
+}
+
+else
+{
+    <h2 style="color:red">No newspapers are subscribed..</h2>
+    <div class="btn btn-default">@Html.ActionLink("Back", "Index", "Customer")</div>
+}
+@if (TempData["cart"] != null)
+{
+
+    using (Html.BeginForm())
+    {
+        <input type="submit" value="Subscribe" onclick="https://localhost:44310/Newspapers/Create" class="btn btn-primary" />
+    }
+}
